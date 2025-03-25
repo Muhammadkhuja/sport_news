@@ -11,7 +11,7 @@ const addCategory = async (req, res) => {
             `,
       [name, description, parent_id]
     );
-    if (newLang.rowCount === 0) {
+    if (newCategory.rowCount === 0) {
       return res
         .status(404)
         .send({ message: "Qiymatlar shartni qanoatlantirmaydi " });
@@ -71,7 +71,7 @@ const updateCategory = async (req, res) => {
             `,
       [name, description, parent_id, id]
     );
-    if (newLang.rowCount === 0 || !id) {
+    if (newCategory.rowCount === 0 || !id) {
       return res
         .status(404)
         .send({ message: "id yoki qiymatlar shartni qanoatlantirmaydi " });

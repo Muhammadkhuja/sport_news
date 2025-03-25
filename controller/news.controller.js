@@ -25,7 +25,7 @@ const addNews = async (req, res) => {
             `,
       [news_id, category_id, author_id, status, published_at, source, lang_id]
     );
-    if (newLang.rowCount === 0) {
+    if (newNews.rowCount === 0) {
       return res
         .status(404)
         .send({ message: "Qiymatlar shartni qanoatlantirmaydi " });
@@ -102,7 +102,7 @@ const updateNews = async (req, res) => {
         id,
       ]
     );
-    if (newLang.rowCount === 0 || !id) {
+    if (newNews.rowCount === 0 || !id) {
       return res
         .status(404)
         .send({ message: "id yoki qiymatlar shartni qanoatlantirmaydi " });

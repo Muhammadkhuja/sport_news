@@ -31,7 +31,7 @@ const addUser = async (req, res) => {
         bookmarks,
       ]
     );
-    if (newLang.rowCount === 0) {
+    if (newUsers.rowCount === 0) {
       return res
         .status(404)
         .send({ message: "Qiymatlar shartni qanoatlantirmaydi " });
@@ -116,7 +116,7 @@ const updateUser = async (req, res) => {
         id,
       ]
     );
-    if (newLang.rowCount === 0 || !id) {
+    if (newUsers.rowCount === 0 || !id) {
       return res
         .status(404)
         .send({ message: "id yoki qiymatlar shartni qanoatlantirmaydi " });

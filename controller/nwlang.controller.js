@@ -14,7 +14,7 @@ const addNwlang = async (req, res) => {
             `,
       [title, contnet, summary_news, lang_id]
     );
-    if (newLang.rowCount === 0) {
+    if (newNwlang.rowCount === 0) {
       return res
         .status(404)
         .send({ message: "Qiymatlar shartni qanoatlantirmaydi " });
@@ -79,7 +79,7 @@ const updateNwlang = async (req, res) => {
             `,
       [title, contnet, summary_news, lang_id, id]
     );
-    if (newLang.rowCount === 0 || !id) {
+    if (newNwlang.rowCount === 0 || !id) {
       return res
         .status(404)
         .send({ message: "id yoki qiymatlar shartni qanoatlantirmaydi " });
