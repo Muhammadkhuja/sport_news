@@ -14,6 +14,7 @@ const authorROUTE = require("./authors.routes");
 const tagsROUTE = require("./tags.routes");
 const news_tagROUTE = require("./news_tags.routes");
 const notifactionsROUTE = require("./notifactions.routes");
+const otpROUTE = require("./otp.routes")
 
 router.use("/langs", langROUTER);
 router.use("/category", categoryROUTER);
@@ -28,6 +29,7 @@ router.use("/viewed", viewsROUTE);
 router.use("/authors", authorROUTE);
 router.use("/tags", tagsROUTE);
 router.use("/news_tag", news_tagROUTE);
-router.use("notifactions", notifactionsROUTE);
+router.use("/notifactions", notifactionsROUTE);
+router.use("/otp", otpROUTE)
 
 module.exports = router;
