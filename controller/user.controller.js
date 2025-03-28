@@ -1,9 +1,19 @@
 const { errorHandler } = require("../helpers/error_handler");
+const DeviceDetector = require("node-device-detector");
+const DeviceHelper = require("node-device-detector/helper");
 const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwtService = require("../services/jwt.service");
 const config = require("config");
 const mailService = require("../services/mail.service");
+const detector = new DeviceDetector({
+  clientIndexes: true,
+  deviceIndexes: true,
+  deviceAliasCode: false,
+  deviceTrusted: false,
+  deviceInfo: false,
+  maxUserAgentSize: 500,
+});
 
 const addUser = async (req, res) => {
   try {
@@ -55,22 +65,28 @@ const addUser = async (req, res) => {
 };
 const getUser = async (req, res) => {
   try {
+    const userAgent = req.headers["user-agent"]
+    // console.log(userAgent);
+    const result = detector.detect(userAgent)
+    console.log("result parse", result);
+    
+    
     const getUser = await pool.query(`select * from  users`);
-    console.log(getUser);
-    console.log(getUser.rows[0]);
+    // console.log(getUser);
+    // console.log(getUser.rows[0]);
     res
       .status(201)
       .send({ message: "barcha users lar", users: getUser.rows[0] });
 
-    await mailService.sendActivationMail(
-      newUser.email,
-      `${config.get("api_url")}/api/users/activate/${activation_link}`
-    );
-    res.status(201).send({
-      message:
-        "Yangi foydalanuvchi qo'shildi. Akkauntni foallashtirish uchun pochtaga o'ting",
-      newUser,
-    });
+    // await mailService.sendActivationMail(
+    //   newUser.email,
+    //   `${config.get("api_url")}/api/users/activate/${activation_link}`
+    // );
+    // res.status(201).send({
+    //   message:
+    //     "Yangi foydalanuvchi qo'shildi. Akkauntni foallashtirish uchun pochtaga o'ting",
+    //   newUser,
+    // });
   } catch (error) {
     errorHandler(error, res);
   }

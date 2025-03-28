@@ -6,6 +6,7 @@ const pool = require("../config/db");
 const uuid = require("uuid");
 const { encode, decode } = require("../helpers/crypt");
 const mailService = require("../services/mail.service");
+const smsService = require("../services/sms.service");
 
 const createOtp = async (req, res) => {
   try {
@@ -30,6 +31,13 @@ const createOtp = async (req, res) => {
       [uuid.v4(), otp, expirationTime]
     );
 
+    const response = await smsService.sendSms(phone_number, otp)
+    if(response.status != 200){
+        return res.status(503).send({message: " kodga qara nima bu axvol a "})
+    }
+
+    const message = `Code has been send ot user ${phone_number.slice(phone_number.length - 4)}`
+
     const dateil = {
       timesamtamp: now,
       otp_id: newOtp.rows[0].id,
@@ -41,7 +49,7 @@ const createOtp = async (req, res) => {
         await mailService.sendOtpMail(email, otp);
     }
 
-    res.status(201).send({ verification_key: encodedDate });
+    res.status(201).send({ verification_key: encodedDate, message });
   } catch (error) {
     errorHandler(error, res);
   }
@@ -121,6 +129,7 @@ const verifyOTP = async (req, res) => {
       userID = newUser.rows[0].id;
       isNEW = true;
     }
+    
 
     const response = {
       Status: "Seccess",

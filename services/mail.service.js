@@ -40,7 +40,7 @@ class MailService {
         <div>
           <h1>Sizning tasdiqlash kodingiz (OTP):</h1>
           <h2 style="color: blue;">${otp}</h2>
-          <p>Bu kod 5 daqiqa davomida amal qiladi.</p>
+          <p>Bu kod 3 daqiqa davomida amal qiladi.</p>
         </div>
       `,
     });
